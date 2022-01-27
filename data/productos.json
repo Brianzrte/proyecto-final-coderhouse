@@ -1,0 +1,22 @@
+[
+  {
+    "nombre": "arroz",
+    "precio": 89,
+    "descripcion": "arroz blanco",
+    "codigo": 3004,
+    "foto": "https://m.media-amazon.com/images/I/71pC93kJ9GL._AC_SL1000_.jpg",
+    "stock": 9,
+    "timestamp": "2022-01-27T21:18:26.064Z",
+    "id": "8af869c6-c7c8-4bc9-8eaa-db91e6c51465"
+  },
+  {
+    "nombre": "fideos",
+    "timestamp": "2022-01-27T21:31:50.403Z",
+    "id": "c97e7754-bc33-4f6e-a88c-1fdad950d963",
+    "precio": 95,
+    "descripcion": "fideos moñito",
+    "codigo": 3005,
+    "foto": "https://walmartar.vteximg.com.br/arquivos/ids/868618-1000-1000/Fideos-Secos-Mo-os-Matarazzo-500-Gr-1-13686.jpg?v=637296528690670000",
+    "stock": 455
+  }
+]
