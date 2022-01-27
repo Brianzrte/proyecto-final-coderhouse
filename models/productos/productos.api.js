@@ -35,7 +35,7 @@ class ProductosApi {
     }
 
     save(obj) {
-        const producto = {... obj, timestamp: new Date() ,id: uuidv4()};
+        const producto = {... obj, timestamp: Date.now() ,id: uuidv4()};
         this.productos.push(producto);
         this.saveFile();
         return producto;

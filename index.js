@@ -10,7 +10,6 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 
 //rutas
 
-
 app.use('/api', router);
 app.get('/', (req, res) => {
     res.send('Proyecto Final Coderhouse, primera entrega');

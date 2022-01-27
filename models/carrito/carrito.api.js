@@ -42,7 +42,7 @@ class CarritoApi {
         const cart = {
             id: uuidv4(),
             productos: [],
-            timestamp: new Date()
+            timestamp: Date.now()
         }
         this.carritos.push(cart);
         this.saveFile();

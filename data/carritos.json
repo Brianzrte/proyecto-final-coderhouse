@@ -9,7 +9,7 @@
         "codigo": 3004,
         "foto": "https://m.media-amazon.com/images/I/71pC93kJ9GL._AC_SL1000_.jpg",
         "stock": 9,
-        "timestamp": "2022-01-27T21:18:26.064Z",
+        "timestamp": "1643326641298",
         "id": "8af869c6-c7c8-4bc9-8eaa-db91e6c51465"
       },
       {
@@ -19,7 +19,7 @@
         "codigo": 3005,
         "foto": "https://walmartar.vteximg.com.br/arquivos/ids/868618-1000-1000/Fideos-Secos-Mo-os-Matarazzo-500-Gr-1-13686.jpg?v=637296528690670000",
         "stock": 34,
-        "timestamp": "2022-01-27T21:31:50.403Z",
+        "timestamp": "1643326641298",
         "id": "c97e7754-bc33-4f6e-a88c-1fdad950d963"
       },
       {
@@ -29,10 +29,10 @@
         "codigo": 30025,
         "foto": "https://as01.epimg.net/argentina/imagenes/2021/05/26/actualidad/1622031962_602856_1622032179_noticia_normal.jpg",
         "stock": 45,
-        "timestamp": "2022-01-27T23:05:52.571Z",
+        "timestamp": "1643326641298",
         "id": "eb0133d1-96c5-43c2-bc14-80b73e6dd311"
       }
     ],
-    "timestamp": "2022-01-27T21:50:47.808Z"
+    "timestamp": "1643326641298"
   }
 ]
