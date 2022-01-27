@@ -1,15 +1,13 @@
 const { ProductosApi } = require('../../models/index');
 const productos = new ProductosApi();
 
-const getAllController = async (req, res) => {
-    const producto = await productos.getAll();
-    return (producto.length > 0) ? res.status(200).json(producto) 
-                       : res.status(404).json({ message: 'no hay productos' });
-};
 
-const getByIdController = async (req, res) => {
+const getController = async (req, res) => {
     const id = req.params.id;
-    if (!id) return res.status(400).json({ error: 'El id es requerido' })
+    if (!id) {
+        const producto = await productos.getAll();
+        return res.status(200).json(producto);
+    }
     
     const producto = await productos.getById(id);
     return (producto) ? res.status(200).json(producto)
@@ -21,6 +19,10 @@ const saveController = async (req, res) => {
 
     if (!nombre || !precio || !descripcion || !codigo || !foto || !stock) 
         return res.status(400).json({ error: 'Todos los campos son requeridos' });
+
+    //verifico si el codigo ya existe
+    const producto = await productos.getByCode(codigo);
+    if(producto) return res.status(400).json({ error: 'El producto ya existe' });
 
     const result = await productos.save({
         nombre,
@@ -41,8 +43,8 @@ const updateController = async (req, res) => {
 
     const { nombre, precio, descripcion, codigo, foto, stock } = req.body;
 
-    /* if (!nombre || !precio || !descripcion || !codigo || !foto || !stock) 
-        return res.status(400).json({ error: 'Todos los campos son requeridos' }); */
+    if (!nombre || !precio || !descripcion || !codigo || !foto || !stock) 
+        return res.status(400).json({ error: 'Todos los campos son requeridos' });
 
     const result = await productos.update(id, {
         nombre,
@@ -69,8 +71,7 @@ const deleteController = async (req, res) => {
 
 //exports
 module.exports = {
-    getAllController,
-    getByIdController,
+    getController,
     saveController,
     updateController,
     deleteController

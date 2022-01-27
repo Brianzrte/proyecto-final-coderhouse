@@ -70,6 +70,11 @@ class ProductosApi {
         return producto;
     }
 
+    getByCode(code) {
+        const producto = this.productos.find(producto => producto.codigo === code);
+        return (producto) ? producto : null;
+    }
+
 
 }
 

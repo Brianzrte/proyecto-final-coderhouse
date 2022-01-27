@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const rutaApi = require('./routes/app.routers');
+const router = require('./routes/app.routers');
 
 const PORT = process.env.PORT || 8080;
 
@@ -9,11 +9,13 @@ const PORT = process.env.PORT || 8080;
 app.use(express.static(path.resolve(__dirname, 'public')));
 
 //rutas
-app.use('/api', rutaApi);
 
+
+app.use('/api', router);
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('Proyecto Final Coderhouse, primera entrega');
 });
+
 
 const connectedServer = app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);

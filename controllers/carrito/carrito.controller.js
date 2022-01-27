@@ -20,10 +20,10 @@ const pushToCartController = async (req, res) => {
     const { id } = req.params;
     const { productos } = req.body;
     if (!id || !productos) return res.status(400).json({ error: 'El id y el idProducto son requeridos' })
-
+    
     const cart = await carrito.pushToCart(id, productos);
     return (cart) ? res.status(200).json({ message: 'Producto agregado al carrito' })
-                    : res.status(500).json({ error: 'Error al agregar el producto al carrito' });
+                  : res.status(404).json({ error: 'El producto no existe' });
 }
 
 const deleteCartController = async (req, res) => {

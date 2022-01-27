@@ -63,6 +63,8 @@ class CarritoApi {
             const producto = productos.getById(idProductos[i]);
             if(producto){
                 cart.productos.push(producto);
+            } else {
+                return null;
             }
         }
         this.saveFile();

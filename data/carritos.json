@@ -21,6 +21,16 @@
         "stock": 34,
         "timestamp": "2022-01-27T21:31:50.403Z",
         "id": "c97e7754-bc33-4f6e-a88c-1fdad950d963"
+      },
+      {
+        "nombre": "harina",
+        "precio": 50,
+        "descripcion": "harina leudante",
+        "codigo": 30025,
+        "foto": "https://as01.epimg.net/argentina/imagenes/2021/05/26/actualidad/1622031962_602856_1622032179_noticia_normal.jpg",
+        "stock": 45,
+        "timestamp": "2022-01-27T23:05:52.571Z",
+        "id": "eb0133d1-96c5-43c2-bc14-80b73e6dd311"
       }
     ],
     "timestamp": "2022-01-27T21:50:47.808Z"
