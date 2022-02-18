@@ -1,13 +1,14 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const authMiddleware = require('../../middlewares/auth/auth');
+import authMiddleware from '../../middlewares/auth/auth.js'
+import handlerError from '../../middlewares/error/handlerError.js'
 
-const { 
+import { 
     getController,
     saveController,
     updateController,
     deleteController
-} = require('../../controllers/productos/productos.controller');
+} from '../../controllers/productos/productos.controller.js'
 
 //rutas
 router.get('/', getController);
@@ -15,6 +16,7 @@ router.get('/:id', getController);
 router.post('/', authMiddleware, saveController);
 router.put('/:id', authMiddleware, updateController);
 router.delete('/:id', authMiddleware, deleteController);
+router.use(handlerError);
 
 //exports
-module.exports = router;
+export default router;

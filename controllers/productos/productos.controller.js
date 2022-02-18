@@ -1,76 +1,79 @@
-const { ProductosApi } = require('../../models/index');
-const productos = new ProductosApi();
+import { productosDao } from '../../models/index.js'
 
 
-const getController = async (req, res) => {
-    const id = req.params.id;
-    if (!id) {
-        const producto = await productos.getAll();
-        return res.status(200).json(producto);
+const getController = async (req, res, next) => {
+    try{
+        return (!req.params.id) 
+            ? res.status(200).json(await productosDao.getAll())
+            : res.status(200).json(await productosDao.getById(req.params.id));
+
+    } catch (error) {
+        next(error);
     }
-    
-    const producto = await productos.getById(id);
-    return (producto) ? res.status(200).json(producto)
-                        : res.status(404).json({ error: 'El producto no existe' });
 }
 
 const saveController = async (req, res) => {
-    const { nombre, precio, descripcion, codigo, foto, stock } = req.body;
+    
+    try{
+        if(req.body.constructor === Object && Object.keys(req.body).length === 0)
+            throw new Error('Error: no se encontro producto');
+    
+        //verifico si el codigo ya existe
+        const producto = await productosDao.getByCode(req.body.codigo);
+        if(producto) throw new Error('Error: el codigo ya existe');
 
-    if (!nombre || !precio || !descripcion || !codigo || !foto || !stock) 
-        return res.status(400).json({ error: 'Todos los campos son requeridos' });
+        res.status(201).json(await productosDao.save({
+            nombre: req.body.nombre,
+            precio: req.body.precio,
+            descripcion : req.body.descripcion,
+            codigo : req.body.codigo,
+            foto : req.body.foto,
+            stock : req.body.stock
+        }));
 
-    //verifico si el codigo ya existe
-    const producto = await productos.getByCode(codigo);
-    if(producto) return res.status(400).json({ error: 'El producto ya existe' });
-
-    const result = await productos.save({
-        nombre,
-        precio,
-        descripcion,
-        codigo,
-        foto,
-        stock
-    });
-
-    return (result) ? res.status(201).json({ message: 'Producto creado' })
-                    : res.status(500).json({ error: 'Error al crear el producto' });
+    } catch (error) {
+        next(error)
+    }
 }
 
 const updateController = async (req, res) => {
-    const id = req.params.id;
-    if (!id) return res.status(400).json({ error: 'El id es requerido' })
+    try {
+        const id = req.params.id;
+        if (!id) throw new Error('Error: no se encontro id de producto');
 
-    const { nombre, precio, descripcion, codigo, foto, stock } = req.body;
+        if(req.body.constructor === Object && Object.keys(req.body).length === 0)
+            throw new Error('Error: no se encontro producto');
 
-    if (!nombre || !precio || !descripcion || !codigo || !foto || !stock) 
-        return res.status(400).json({ error: 'Todos los campos son requeridos' });
+        const { nombre, precio, descripcion, codigo, foto, stock } = req.body;
 
-    const result = await productos.update(id, {
-        nombre,
-        precio,
-        descripcion,
-        codigo,
-        foto,
-        stock
-    });
+        res.status(200).json( await productosDao.update(id, {
+            nombre,
+            precio,
+            descripcion,
+            codigo,
+            foto,
+            stock
+        }) );
 
-    return (result) ? res.status(200).json({ message: 'Producto actualizado' })
-                    : res.status(500).json({ error: 'Error al actualizar el producto' });
+    } catch (error) {
+        next(error);
+    }
+    
 }
 
 const deleteController = async (req, res) => {
-    const id = req.params.id;
-    if (!id) return res.status(400).json({ error: 'El id es requerido' })
+    try {
+        const id = req.params.id;
+        if (!id) throw new Error('Error: no se encontro id de producto');
 
-    const result = await productos.delete(id);
-
-    return (result) ? res.status(200).json({ message: 'Producto eliminado' })
-                    : res.status(404).json({ error: 'El producto no existe' });
+        res.status(200).json( await productos.delete(id) );
+    } catch (error) {
+        next(error);
+    }
 }
 
 //exports
-module.exports = {
+export {
     getController,
     saveController,
     updateController,

@@ -1,13 +1,16 @@
-const express = require('express');
+import express from 'express'
 const router = express.Router();
 
 //middleware
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
+const {default: productosRoute } = await import('./productos/productos.routes.js');
+const {default: carritoRoute } = await import('./carrito/carrito.routes.js');
+
 //rutas raiz
-router.use('/productos', require('./productos/productos.routes'));
-router.use('/carrito', require('./carrito/carrito.routes'));
+router.use('/productos', productosRoute);
+router.use('/carrito', carritoRoute);
 router.use('*', (req, res) => {
     res.status(404).json({
         error: -2,
@@ -16,4 +19,4 @@ router.use('*', (req, res) => {
 });
 
 //exportar
-module.exports = router;
+export default router;

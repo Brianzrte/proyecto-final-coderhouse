@@ -1,7 +1,8 @@
-const express = require('express');
-const path = require('path');
+import express from 'express';
+import path  from 'path' 
+
 const app = express();
-const router = require('./routes/app.routers');
+const {default: router} = await import ('./routes/app.routers.js');
 
 const PORT = process.env.PORT || 8080;
 

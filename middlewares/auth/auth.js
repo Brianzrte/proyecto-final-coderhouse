@@ -7,5 +7,5 @@ const authMiddleware = (req, res, next) => {
                        descripcion: 'no tienes permisos para acceder a la ruta ' + req.baseUrl + ' con el metodo ' + req.method });
 }
 
-module.exports = authMiddleware;
+export default authMiddleware;
 

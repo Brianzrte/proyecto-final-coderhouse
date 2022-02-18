@@ -1,55 +1,70 @@
-const CarritoApi  = require('../../models/carrito/carrito.api');
-const carrito = new CarritoApi();
+import { carritoDao as carrito }  from '../../models/index.js'
 
-const createCartController = async (req, res) => {
-    const cart = await carrito.createCart();
-    return (cart) ? res.status(201).json(cart)
-                    : res.status(500).json({ error: 'Error al crear el carrito' });
-}
 
-const getCartController = async (req, res) => {
-    const { id } = req.params;
-    if (!id) return res.status(400).json({ error: 'El id es requerido' })
-
-    const cart = await carrito.getCart(id);
-    return (cart) ? res.status(200).json(cart)
-                    : res.status(404).json({ error: 'El carrito no existe' });
-}
-
-const pushToCartController = async (req, res) => {
-    const { id } = req.params;
-    const { productos } = req.body;
-    if (!id || !productos) return res.status(400).json({ error: 'El id y el idProducto son requeridos' })
+const createCartController = async (req, res, next) => {
+    try {
+        res.status(201).json(await carrito.createCart()); 
+    } catch (error) {
+        next(error);
+    }
     
-    const cart = await carrito.pushToCart(id, productos);
-    return (cart) ? res.status(200).json({ message: 'Producto agregado al carrito' })
-                  : res.status(404).json({ error: 'El producto no existe' });
 }
 
-const deleteCartController = async (req, res) => {
-    const { id } = req.params;
-    if (!id) return res.status(400).json({ error: 'El id es requerido' })
+const getCartController = async (req, res, next) => {
+    try{
+        const { id } = req.params;
+        if (!id) next(new Error('Error: no se encontro id de carrito'));
 
-    const cart = await carrito.deleteCart(id);
-    return (cart) ? res.status(200).json({ message: 'Carrito eliminado' })
-                    : res.status(500).json({ error: 'Error al eliminar el carrito' });
+        res.status(200).json(await carrito.getById(id))
+    } catch (error) {
+        next(error);
+    }
 }
 
-const deleteProductController = async (req, res) => {
-    const { id } = req.params;
-    const { idProducto } = req.params;
-    if (!id || !idProducto) return res.status(400).json({ error: 'El id del carrito y el id del producto son requeridos' })
+const pushToCartController = async (req, res, next) => {
+    // compruebo que el req.body no este vacio
+    try {
+        const { id } = req.params;
+        const { productos } = req.body;
+        if (!id) next(new Error('Error: no se encontro id de carrito'));
+        if (!producto) next(new Error('Error: no se encontro producto'));
 
-    const cart = await carrito.deleteProduct(id, idProducto);
-    return (cart) ? res.status(200).json({ message: 'Producto eliminado del carrito' })
-                    : res.status(500).json({ error: 'Error al eliminar el producto del carrito' });
+        res.status(200).json(await carrito.pushToCart(productos, id));
+    } catch (error) {
+        next(error);
+    }
+    
+}
+
+const deleteCartController = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        if (!id) throw new Error('Error: no se encontro id de carrito');
+
+        res.status(200).json(await carrito.deleteCart(id))  
+    } catch (error) {
+        next(error);
+    }
+}
+
+const deleteProductController = async (req, res, next) => {
+    try{
+        const { id } = req.params;
+        const { idProducto } = req.params;
+        if (!id) throw new Error('Error: no se encontro id de carrito');
+        if (!idProducto) throw new Error('Error: no se encontro id de producto');
+
+        res.status(200).json(await carrito.deleteProduct(id, idProducto))
+    } catch (error) {
+        next(error);
+    }
 }
 
 //exports
-module.exports = {
+export  {
     createCartController,
     getCartController,
     pushToCartController,
     deleteCartController,
-    deleteProductController
+    deleteProductController,
 };
