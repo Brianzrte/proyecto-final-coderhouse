@@ -7,7 +7,7 @@ const {default: router} = await import ('./routes/app.routers.js');
 const PORT = process.env.PORT || 8080;
 
 //estaticos
-app.use(express.static(path.resolve(__dirname, 'public')));
+app.use(express.static('public'));
 
 //rutas
 

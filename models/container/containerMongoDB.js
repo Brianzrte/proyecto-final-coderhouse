@@ -1,5 +1,6 @@
 import mongoose from 'mongoose' // Importamos mongoose
 import config from '../../database/config.js'
+import { asPOJO, removeField, renameField } from '../../utils/objectUtils.js';
 
 
 await mongoose.connect(config.mongodb.uri, config.mongodb.options);
@@ -39,7 +40,8 @@ class MongoseDBContainer {
 
     async update(id, obj) {
         try{
-            return await this.model.findByIdAndUpdate(id, obj);
+            const res = await this.model.findByIdAndUpdate(id, obj);
+            if(res) return { message: 'Actualizado correctamente' };
         } catch (error) {
             throw new Error(error);
         }

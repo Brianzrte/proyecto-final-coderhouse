@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 import containerMongoDB from '../container/containerMongoDB.js'
 
+
 const { Schema } = mongoose;
 const collection = 'productos';
 

@@ -18,7 +18,8 @@ class Carrito extends containerMongoDB {
             const cart = new this.model({
                 productos: [],
             });
-            return await cart.save();
+            if (await cart.save())
+                return { message: 'Carrito creado correctamente', id: cart._id };
         } catch (error) {
             throw new Error(error);
         }

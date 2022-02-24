@@ -25,9 +25,9 @@ const pushToCartController = async (req, res, next) => {
     // compruebo que el req.body no este vacio
     try {
         const { id } = req.params;
-        const { productos } = req.body;
+        const  productos   = req.body;
         if (!id) next(new Error('Error: no se encontro id de carrito'));
-        if (!producto) next(new Error('Error: no se encontro producto'));
+        if (!productos) next(new Error('Error: no se encontro producto'));
 
         res.status(200).json(await carrito.pushToCart(productos, id));
     } catch (error) {
@@ -41,7 +41,7 @@ const deleteCartController = async (req, res, next) => {
         const { id } = req.params;
         if (!id) throw new Error('Error: no se encontro id de carrito');
 
-        res.status(200).json(await carrito.deleteCart(id))  
+        res.status(200).json(await carrito.delete(id))  
     } catch (error) {
         next(error);
     }
