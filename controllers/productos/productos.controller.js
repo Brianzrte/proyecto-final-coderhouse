@@ -12,7 +12,7 @@ const getController = async (req, res, next) => {
     }
 }
 
-const saveController = async (req, res) => {
+const saveController = async (req, res, next) => {
     
     try{
         if(req.body.constructor === Object && Object.keys(req.body).length === 0)
@@ -20,6 +20,7 @@ const saveController = async (req, res) => {
     
         //verifico si el codigo ya existe
         const producto = await productosDao.getByCode(req.body.codigo);
+        console.log(producto);
         if(producto) throw new Error('Error: el codigo ya existe');
 
         res.status(201).json(await productosDao.save({
@@ -36,7 +37,7 @@ const saveController = async (req, res) => {
     }
 }
 
-const updateController = async (req, res) => {
+const updateController = async (req, res, next) => {
     try {
         const id = req.params.id;
         if (!id) throw new Error('Error: no se encontro id de producto');
@@ -61,7 +62,7 @@ const updateController = async (req, res) => {
     
 }
 
-const deleteController = async (req, res) => {
+const deleteController = async (req, res, next) => {
     try {
         const id = req.params.id;
         if (!id) throw new Error('Error: no se encontro id de producto');

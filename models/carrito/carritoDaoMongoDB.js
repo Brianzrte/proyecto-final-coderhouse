@@ -25,6 +25,12 @@ class Carrito extends containerMongoDB {
         }
     }
 
+    /**
+     * Recibe un id de carrito y un producto para agregarlo al carrito
+     * @param {*} producto  {id, nombre, precio, descripcion, codigo, foto, stock}
+     * @param {*} idCarrito  id del carrito
+     * @returns boolean
+     */
     async pushToCart(producto, idCarrito) {
         try{
             const cart = await this.model.findById(idCarrito);
